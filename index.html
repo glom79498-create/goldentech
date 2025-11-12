@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
   <title>GoldenTech — Black Friday</title>
-  <meta name="description" content="GoldenTech Black Friday — laptops, teléfonos, audio. Envío gratis.">
+  <meta name="description" content="GoldenTech Black Friday — Laptops, Teléfonos, Audio. Envío gratis." >
   <style>
     :root{--bg:#070607;--card:#0f0f0f;--muted:#bfb8a5;--gold:#d4af37;--accent:#ffcf66;--maxw:1200px;}
     *{box-sizing:border-box}
@@ -99,7 +99,7 @@
 
   <div class="summary-row" style="font-weight:800">
     <div>Total</div>
-    <div class="total-big">$<span id="total">0.00</span></div>
+    <div id="total-big">$<span id="total">0.00</span></div>
   </div>
 
   <div style="display:flex;gap:8px;margin-top:12px">
@@ -196,26 +196,50 @@
   renderCart(); // asegura que subtotal/total se actualicen
 }
 
-  function renderCart(){
-    const list = document.getElementById('cart-list'); list.innerHTML='';
-    let subtotal = 0; let count = 0;
-    for(const id in cart){
-      const qty = cart[id]; const p = products.find(x=>x.id==id);
-      const row = document.createElement('div'); row.className='cart-item';
-      row.innerHTML = `<div style="max-width:62%"><strong style="color:#efe8d6">${p.title}</strong><div class="small">x${qty} · $${p.price.toFixed(2)}</div></div>
-                       <div style="text-align:right;color:#efe8d6">$${(p.price*qty).toFixed(2)}<div style="margin-top:6px"><button class="secondary" onclick="removeItem(${p.id})">Eliminar</button></div></div>`;
-      list.appendChild(row);
-      subtotal += p.price*qty; count += qty;
-    }
-    document.getElementById('cart-count').innerText = count;
-    document.getElementById('subtotal').innerText = subtotal.toFixed(2);
-    // Tax removed as requested
-    const shipping = subtotal>99 ? 0 : (subtotal>0 ? 9.99 : 0);
-    document.getElementById('shipping').innerText = shipping.toFixed(2);
-    document.getElementById('shipping-txt').innerText = shipping===0 ? 'Gratis' : '$'+shipping.toFixed(2);
-    const total = +(subtotal + shipping).toFixed(2);
-    document.getElementById('total').innerText = total.toFixed(2);
+  function renderCart() {
+  const list = document.getElementById("cart-list");
+  list.innerHTML = "";
+  let subtotal = 0;
+  let count = 0;
+
+  for (const id in cart) {
+    const qty = cart[id];
+    const p = products.find((x) => x.id == id);
+    const row = document.createElement("div");
+    row.className = "cart-item";
+    row.innerHTML = `
+      <div style="max-width:62%">
+        <strong style="color:#efe8d6">${p.title}</strong>
+        <div class="small">x${qty} · $${p.price.toFixed(2)}</div>
+      </div>
+      <div style="text-align:right;color:#efe8d6">
+        $${(p.price * qty).toFixed(2)}
+        <div style="margin-top:6px">
+          <button class="secondary" onclick="removeItem(${p.id})">Eliminar</button>
+        </div>
+      </div>
+    `;
+    list.appendChild(row);
+    subtotal += p.price * qty;
+    count += qty;
   }
+
+  // Actualizar subtotal
+  document.getElementById("subtotal").innerText = subtotal.toFixed(2);
+
+  // Calcular envío
+  let shipping = subtotal > 99 || subtotal === 0 ? 0 : 9.99;
+  document.getElementById("shipping").innerText = shipping.toFixed(2);
+  document.getElementById("shipping-txt").innerText = shipping === 0 ? "Gratis" : "$" + shipping.toFixed(2);
+
+  // Calcular total (subtotal + envío)
+  let total = subtotal + shipping;
+  document.getElementById("total").innerText = total.toFixed(2);
+
+  // Actualizar contador
+  document.getElementById("cart-count").innerText = count;
+}
+
 
   function removeItem(id){ delete cart[id]; document.getElementById('qty-'+id) && (document.getElementById('qty-'+id).innerText = 0); renderCart(); }
   function clearCart(){ for(const id in cart) delete cart[id]; products.forEach(p => document.getElementById('qty-'+p.id) && (document.getElementById('qty-'+p.id).innerText = 0)); renderCart(); }
