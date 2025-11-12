@@ -99,7 +99,7 @@
 
   <div class="summary-row" style="font-weight:800">
     <div>Total</div>
-    <div id="total-big">$<span id="total">0.00</span></div>
+   <div class="total-big">$<span id="total-value">0.00</span></div>
   </div>
 
   <div style="display:flex;gap:8px;margin-top:12px">
@@ -234,7 +234,7 @@
 
   // Calcular total (subtotal + envío)
   let total = subtotal + shipping;
-  document.getElementById("total").innerText = total.toFixed(2);
+ document.getElementById("total-value").innerText = total.toFixed(2);
 
   // Actualizar contador
   document.getElementById("cart-count").innerText = count;
