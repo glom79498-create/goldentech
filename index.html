@@ -38,6 +38,7 @@
     .total-big{font-size:20px;color:var(--gold);font-weight:900}
   </style>
 </head>
+
 <body>
   <div class="container">
     <header>
@@ -86,7 +87,118 @@
   </div>
 
 <script>
-// ... el mismo script de productos y carrito (omitido aquí por longitud)
+  // Productos con URLs EXACTAS de tu repo (reemplazadas)
+  const products = [
+    {id:1, category:'Laptops', title:'MacBook Air M2 (2024)', price:799, old:1199, img:'https://raw.githubusercontent.com/glom79498-create/goldentech/refs/heads/main/MacBook%20Air%20M2%20%282024%29.png'},
+    {id:2, category:'Laptops', title:'Dell XPS 13 Plus', price:599, old:999, img:'https://raw.githubusercontent.com/glom79498-create/goldentech/refs/heads/main/20251111_1750_Dell%20XPS%20Excellence_simple_compose_01k9tw1szjfmjahxrveetgmbmr.png'},
+    {id:3, category:'Laptops', title:'HP Envy 15 Ryzen 7', price:499, old:899, img:'https://raw.githubusercontent.com/glom79498-create/goldentech/refs/heads/main/20251111_1752_HP%20Envy%20Laptop_simple_compose_01k9tw4yhgfbfbepk5cd4wzp0f.png'},
+    {id:4, category:'Laptops', title:'Lenovo ThinkPad X1 Carbon Gen 11', price:699, old:1299, img:'https://raw.githubusercontent.com/glom79498-create/goldentech/refs/heads/main/20251111_1819_ThinkPad%20X1%20Carbon_simple_compose_01k9txpsvqfcjrvsvpsz6srcs5.png'},
+    {id:5, category:'Laptops', title:'ASUS ROG Zephyrus G14', price:899, old:1499, img:'https://raw.githubusercontent.com/glom79498-create/goldentech/refs/heads/main/20251111_1824_ASUS%20Gaming%20Laptop_simple_compose_01k9txyzapfy8r8vrg5qsst9p9.png'},
+    {id:6, category:'Laptops', title:'Acer Swift 3 Intel EVO', price:329, old:699, img:'https://raw.githubusercontent.com/glom79498-create/goldentech/refs/heads/main/20251111_1826_Acer%20Swift%203_simple_compose_01k9ty338tfwpt6834hyd9mzaa.png'},
+    {id:7, category:'Teléfonos', title:'iPhone 15 Pro Max (Refurb)', price:749, old:1199, img:'https://raw.githubusercontent.com/glom79498-create/goldentech/refs/heads/main/20251111_1828_Refurbished%20iPhone%2015%20Pro_simple_compose_01k9ty6hxre6sv20v5abyezykm.png'},
+    {id:8, category:'Teléfonos', title:'Samsung Galaxy S23 Ultra', price:699, old:1099, img:'https://raw.githubusercontent.com/glom79498-create/goldentech/refs/heads/main/20251111_1830_Samsung%20Galaxy%20S23%20Ultra_simple_compose_01k9tyakkxfk4v7eecs1h70c8j.png'},
+    {id:9, category:'Teléfonos', title:'Google Pixel 8a', price:399, old:699, img:'https://raw.githubusercontent.com/glom79498-create/goldentech/refs/heads/main/20251111_1833_Google%20Pixel%208a_simple_compose_01k9tyfjjmfdbrtrynfsc4sgb5.png'},
+    {id:10, category:'Teléfonos', title:'OnePlus 12R 5G', price:299, old:599, img:'https://raw.githubusercontent.com/glom79498-create/goldentech/refs/heads/main/20251111_1842_OnePlus%2012R%205G_simple_compose_01k9tz16zxet3r6w0s0rmp02r0.png'},
+    {id:11, category:'Teléfonos', title:'Motorola Edge 40', price:199, old:499, img:'https://raw.githubusercontent.com/glom79498-create/goldentech/refs/heads/main/20251111_1847_Motorola%20Smartphone%20Reveal_simple_compose_01k9tzan66ev4amxgbtbwamn7s.png'},
+    {id:12, category:'Teléfonos', title:'Nokia G310 5G', price:129, old:249, img:'https://raw.githubusercontent.com/glom79498-create/goldentech/refs/heads/main/20251111_2233_Nokia%20G310%205G_simple_compose_01k9v1xqbefd18qvg4eyfwfyyh.png'},
+    {id:13, category:'Audio', title:'Apple AirPods Pro 2', price:129, old:249, img:'https://raw.githubusercontent.com/glom79498-create/goldentech/refs/heads/main/20251111_2234_Apple%20AirPods%20Pro_simple_compose_01k9v20qj9f8xakxncm1q18btr.png'},
+    {id:14, category:'Audio', title:'Sony WH-1000XM5', price:179, old:349, img:'https://raw.githubusercontent.com/glom79498-create/goldentech/refs/heads/main/20251111_2236_Sony%20Headphones%20Model%20XM5_simple_compose_01k9v24b7ye6bt0279b07f597b.png'},
+    {id:15, category:'Audio', title:'Bose QuietComfort Ultra', price:159, old:299, img:'https://raw.githubusercontent.com/glom79498-create/goldentech/refs/heads/main/20251111_2238_Bose%20QuietComfort%20Ultra_simple_compose_01k9v26ptje5msap9w45h1nwt2.png'},
+    {id:16, category:'Audio', title:'Jabra Elite 85t', price:89, old:179, img:'https://raw.githubusercontent.com/glom79498-create/goldentech/refs/heads/main/20251111_2240_Jabra%20Elite%2085t_simple_compose_01k9v2asnzf24ve5ec0jkr00zn.png'},
+    {id:17, category:'Audio', title:'Anker Soundcore Life Q30', price:49, old:99, img:'https://raw.githubusercontent.com/glom79498-create/goldentech/refs/heads/main/20251111_2241_Anker%20Soundcore%20Headphones_simple_compose_01k9v2df65emf9pwn8jadxs2de.png'},
+    {id:18, category:'Audio', title:'Beats Studio Buds+', price:99, old:199, img:'https://raw.githubusercontent.com/glom79498-create/goldentech/refs/heads/main/20251111_2354_Beats%20Studio%20Buds%2B_simple_compose_01k9v6kh12f7ys61cm6a458b7d.png'},
+    {id:19, category:'Smartwatches', title:'Apple Watch Series 9 GPS', price:299, old:499, img:'https://raw.githubusercontent.com/glom79498-create/goldentech/refs/heads/main/20251111_2356_Apple%20Watch%20Series%209_simple_compose_01k9v6phmhfxsafmt7ebyxpyp4.png'},
+    {id:20, category:'Smartwatches', title:'Samsung Galaxy Watch 6 Classic', price:249, old:449, img:'https://raw.githubusercontent.com/glom79498-create/goldentech/refs/heads/main/20251111_2358_Galaxy%20Watch%206%20Classic_simple_compose_01k9v6sak8ed7a30j5rfv5gfg2.png'},
+    {id:21, category:'Smartwatches', title:'Garmin Venu 3', price:279, old:499, img:'https://raw.githubusercontent.com/glom79498-create/goldentech/refs/heads/main/20251112_0000_Garmin%20Smartwatch%20Venu%203_simple_compose_01k9v6ww2yf4j8nmwemgezw5x2.png'},
+    {id:22, category:'Smartwatches', title:'Fitbit Versa 4', price:159, old:299, img:'https://raw.githubusercontent.com/glom79498-create/goldentech/refs/heads/main/20251112_0002_Fitbit%20Versa%204_simple_compose_01k9v720b0eygbzxnwyk96exks.png'},
+    {id:23, category:'Smartwatches', title:'Amazfit GTR 4', price:129, old:249, img:'https://raw.githubusercontent.com/glom79498-create/goldentech/refs/heads/main/20251112_0004_Amazfit%20GTR%204_simple_compose_01k9v75w5pfrft6c5s2j76mk1v.png'},
+    {id:24, category:'Accesorios', title:'Logitech MX Master 3S Mouse', price:69, old:129, img:'https://raw.githubusercontent.com/glom79498-create/goldentech/refs/heads/main/20251112_0006_Logitech%20MX%20Master%203S_simple_compose_01k9v78vs6erv8kgazx021v3ay.png'},
+    {id:25, category:'Accesorios', title:'Keychron K6 Wireless Keyboard', price:79, old:119, img:'https://raw.githubusercontent.com/glom79498-create/goldentech/refs/heads/main/20251112_0008_Keychron%20K6%20Keyboard_simple_compose_01k9v7c8vhes1a5p5z9s3c0w58.png'},
+    {id:26, category:'Accesorios', title:'Ugreen USB-C Hub 8-in-1', price:49, old:89, img:'https://raw.githubusercontent.com/glom79498-create/goldentech/refs/heads/main/20251112_0015_Ugreen%208-in-1%20USB-C%20Hub_simple_compose_01k9v7s6wveyyv1w0sacws5p2g.png'},
+    {id:27, category:'Accesorios', title:'SanDisk 1TB SSD Portable', price:89, old:179, img:'https://raw.githubusercontent.com/glom79498-create/goldentech/refs/heads/main/20251112_0017_SanDisk%20Portable%20SSD_simple_compose_01k9v7wj31fy4a83geaxg4jxnj.png'},
+    {id:28, category:'Accesorios', title:'Anker 20,000mAh Power Bank', price:59, old:99, img:'https://raw.githubusercontent.com/glom79498-create/goldentech/refs/heads/main/20251112_0019_Anker%20Power%20Bank_simple_compose_01k9v803gkf8erqafmak7m1jva.png'}
+  ];
+
+  // build stock & links
+  products.forEach((p)=>{
+    p.stock = Math.floor(Math.random()*80)+20;
+    p.link = 'https://goldentech.store/product/' + encodeURIComponent(p.title.replace(/\s+/g,'_'));
+  });
+
+  const cart = {};
+
+  function renderProducts() {
+    const grid = document.getElementById('products-grid');
+    grid.innerHTML = '';
+    products.forEach(p => {
+      const card = document.createElement('div');
+      card.className = 'card';
+      card.innerHTML = `
+        <img src="${p.img}" alt="${p.title}" loading="lazy" onerror="this.onerror=null;this.src='https://picsum.photos/seed/${encodeURIComponent(p.title)}/600/400'">
+        <div class="title">${p.title}</div>
+        <div><span class="price">$${p.price.toFixed(2)}</span><span class="old">$${p.old.toFixed(2)}</span></div>
+        <div class="small" style="margin-top:6px">Stock: ${p.stock}</div>
+        <div style="margin-top:auto" class="actions">
+          <div style="display:flex;gap:6px;align-items:center">
+            <button class="qty-btn" onclick="decrease(${p.id})">-</button>
+            <div id="qty-${p.id}" style="min-width:28px;text-align:center">0</div>
+            <button class="qty-btn" onclick="increase(${p.id})">+</button>
+          </div>
+          <div style="margin-left:auto">
+            <button class="btn" onclick="addToCart(${p.id})">Agregar</button>
+          </div>
+        </div>
+      `;
+      grid.appendChild(card);
+    });
+  }
+
+  function increase(id){ const q = cart[id]||0; const prod = products.find(p=>p.id===id); if(q < prod.stock){ cart[id]=q+1; document.getElementById('qty-'+id).innerText = cart[id]; renderCart(); } else alert('Stock máximo alcanzado'); }
+  function decrease(id){ const q = cart[id]||0; if(q>0){ cart[id]=q-1; if(cart[id]===0) delete cart[id]; document.getElementById('qty-'+id).innerText = cart[id]||0; renderCart(); } }
+  function addToCart(id){ const q = cart[id]||0; const prod = products.find(p=>p.id===id); if(q>=prod.stock){ alert('No hay más stock'); return; } cart[id]=q+1; document.getElementById('qty-'+id).innerText = cart[id]; renderCart(); }
+
+  function renderCart(){
+    const list = document.getElementById('cart-list'); list.innerHTML='';
+    let subtotal = 0; let count = 0;
+    for(const id in cart){
+      const qty = cart[id]; const p = products.find(x=>x.id==id);
+      const row = document.createElement('div'); row.className='cart-item';
+      row.innerHTML = `<div style="max-width:62%"><strong style="color:#efe8d6">${p.title}</strong><div class="small">x${qty} · $${p.price.toFixed(2)}</div></div>
+                       <div style="text-align:right;color:#efe8d6">$${(p.price*qty).toFixed(2)}<div style="margin-top:6px"><button class="secondary" onclick="removeItem(${p.id})">Eliminar</button></div></div>`;
+      list.appendChild(row);
+      subtotal += p.price*qty; count += qty;
+    }
+    document.getElementById('cart-count').innerText = count;
+    document.getElementById('subtotal').innerText = subtotal.toFixed(2);
+    // Tax removed as requested
+    const shipping = subtotal>99 ? 0 : (subtotal>0 ? 9.99 : 0);
+    document.getElementById('shipping').innerText = shipping.toFixed(2);
+    document.getElementById('shipping-txt').innerText = shipping===0 ? 'Gratis' : '$'+shipping.toFixed(2);
+    const total = +(subtotal + shipping).toFixed(2);
+    document.getElementById('total').innerText = total.toFixed(2);
+  }
+
+  function removeItem(id){ delete cart[id]; document.getElementById('qty-'+id) && (document.getElementById('qty-'+id).innerText = 0); renderCart(); }
+  function clearCart(){ for(const id in cart) delete cart[id]; products.forEach(p => document.getElementById('qty-'+p.id) && (document.getElementById('qty-'+p.id).innerText = 0)); renderCart(); }
+  function scrollToGrid(){ document.getElementById('products-grid').scrollIntoView({behavior:'smooth'}); }
+
+  // Checkout: redirige a JotForm con order_summary y total
+  function checkout(){
+    if(Object.keys(cart).length===0){ alert('El carrito está vacío'); return; }
+    const lines = []; let subtotal=0;
+    for(const id in cart){ const qty=cart[id]; const p = products.find(x=>x.id==id); lines.push(`${p.title} x${qty} -> $${(p.price*qty).toFixed(2)}`); subtotal += p.price*qty; }
+    const shipping = subtotal>99 ? 0 : 9.99; const total = (subtotal + shipping).toFixed(2);
+    const summaryText = lines.join(' | ');
+    const baseForm = 'https://form.jotform.com/glom79498/-complete-your-purchase';
+    const params = new URLSearchParams();
+    params.set('order_summary', summaryText);
+    params.set('total', total);
+    window.location.href = baseForm + '?' + params.toString();
+  }
+
+  document.getElementById('year').innerText = new Date().getFullYear();
+  renderProducts();
+  renderCart();
 </script>
 </body>
 </html>
